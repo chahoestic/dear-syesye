@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Syesye 🎀</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Dancing+Script:wght@500;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FFF0F5;--paper:#FFFDFB;--pink:#FFB7C5;--pink-dark:#FF69B4;
+    --pink-soft:#FFE4EC;--cream:#FFF8E7;--ink:#4A3B42;--tape:rgba(255,183,197,0.55);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{overflow-x:hidden}
+  body{
+    font-family:'Quicksand', sans-serif;
+    background-image:
+      radial-gradient(#FFB7C5 1px, transparent 1px),
+      radial-gradient(circle at 20% 10%, #FFE4EC 0, transparent 40%),
+      radial-gradient(circle at 80% 60%, #FFF8E7 0, transparent 45%);
+    background-size: 24px 24px, 100% 100%, 100% 100%;
+    background-color:var(--bg);
+    color:var(--ink);min-height:100vh;line-height:1.6;
+  }
+  .leaf{position:fixed;top:-40px;font-size:22px;opacity:.6;pointer-events:none;animation:fall linear infinite;z-index:0}
+  @keyframes fall{0%{transform:translateY(-10vh) rotate(0)}100%{transform:translateY(110vh) rotate(360deg)}}
+
+  /* INTRO */
+  #intro{position:fixed;inset:0;background:linear-gradient(160deg,#FFF0F5 0%, #FFD9E4 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:50;transition:opacity .8s ease, visibility .8s ease;padding:20px}
+  #intro.gone{opacity:0;visibility:hidden}
+  #intro .deco{font-family:'Dancing Script',cursive;color:var(--pink-dark);font-size:24px;margin-bottom:6px;letter-spacing:2px}
+  #intro h1{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--pink-dark);font-size:clamp(32px,6vw,48px);margin-bottom:8px}
+  #intro .sub{font-size:16px;color:#8a6b75;margin-bottom:30px;font-style:italic}
+
+  .box-wrap{position:relative;width:220px;height:200px;cursor:pointer;perspective:800px}
+  .box-base{position:absolute;bottom:0;left:0;right:0;height:140px;background:linear-gradient(180deg,#FFC1D2,#FFB7C5);border-radius:8px;box-shadow:0 18px 35px rgba(255,105,180,.25), inset 0 -8px 0 rgba(0,0,0,.08)}
+  .box-base::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:26px;transform:translateX(-50%);background:#fff5f8}
+  .box-lid{position:absolute;top:50px;left:-8px;right:-8px;height:50px;background:linear-gradient(180deg,#FFCCD7,#FFB7C5);border-radius:8px;box-shadow:0 6px 12px rgba(255,105,180,.25);transform-origin:center bottom;transition:transform 1s cubic-bezier(.5,-0.3,.3,1.4), top 1s ease, opacity .6s ease .8s;z-index:3}
+  .box-lid::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:26px;transform:translateX(-50%);background:#fff5f8}
+  .bow{position:absolute;top:36px;left:50%;transform:translateX(-50%);font-size:44px;z-index:4;transition:transform .8s ease, opacity .6s ease;filter:drop-shadow(0 3px 6px rgba(255,105,180,.4))}
+  .jaket{position:absolute;top:60px;left:50%;transform:translateX(-50%) scale(0);font-size:80px;opacity:0;transition:transform 1s cubic-bezier(.2,1.3,.5,1) .5s, opacity .8s ease .5s, top 1s ease .5s;z-index:2}
+  .box-wrap.open .box-lid{transform:translateY(-100px) rotate(-25deg);opacity:0}
+  .box-wrap.open .bow{transform:translate(-50%,-150px) rotate(45deg);opacity:0}
+  .box-wrap.open .jaket{transform:translateX(-50%) scale(1);opacity:1;top:-30px}
+
+  .tap-hint{margin-top:30px;color:var(--pink-dark);font-family:'Dancing Script',cursive;font-size:24px;animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.4}}
+
+  #reveal-msg{margin-top:24px;background:var(--paper);padding:18px 24px;border-radius:18px;max-width:420px;font-size:16px;box-shadow:0 8px 20px rgba(255,183,197,.3);border:2px dashed var(--pink);opacity:0;transform:translateY(20px);transition:opacity .8s ease 1.2s, transform .8s ease 1.2s;text-align:center}
+  .box-wrap.open ~ #reveal-msg{opacity:1;transform:translateY(0)}
+  #scroll-btn{margin-top:18px;background:var(--pink-dark);color:white;border:none;padding:12px 28px;border-radius:30px;font-size:16px;font-family:'Quicksand',sans-serif;font-weight:600;cursor:pointer;box-shadow:0 6px 16px rgba(255,105,180,.4);opacity:0;pointer-events:none;transition:opacity .6s ease 2s, transform .2s}
+  .box-wrap.open ~ #scroll-btn{opacity:1;pointer-events:auto}
+  #scroll-btn:hover{transform:translateY(-2px)}
+
+  /* SCRAPBOOK */
+  .book{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:80px 24px 120px}
+  .book h2.title{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--pink-dark);font-size:clamp(40px,7vw,60px);text-align:center;margin-bottom:50px;transform:rotate(-2deg)}
+  .book h2.title .small{display:block;font-family:'Dancing Script',cursive;font-style:normal;font-size:.4em;color:#a06b80;letter-spacing:3px;margin-bottom:6px}
+  .entry{position:relative;margin:70px auto;opacity:0;transform:translateY(40px);transition:opacity .9s ease, transform .9s ease}
+  .entry.in{opacity:1;transform:translateY(0)}
+  .polaroid{background:var(--paper);padding:14px 14px 50px;box-shadow:0 14px 30px rgba(255,105,180,.18), 0 2px 6px rgba(0,0,0,.05);width:260px;position:relative;transition:transform .3s ease}
+  .polaroid:hover{transform:rotate(0) scale(1.03) !important}
+  .polaroid .photo{width:100%;height:230px;background:#fce4ec;background-size:cover;background-position:center;display:flex;align-items:center;justify-content:center;color:#b08896;font-size:14px;text-align:center;padding:10px}
+  .polaroid .cap{font-family:'Dancing Script',cursive;text-align:center;margin-top:10px;color:var(--pink-dark);font-size:18px}
+  .tape{position:absolute;width:80px;height:24px;background:var(--tape);box-shadow:0 2px 4px rgba(0,0,0,.08)}
+  .tape.tl{top:-10px;left:-15px;transform:rotate(-35deg)}
+  .tape.tr{top:-10px;right:-15px;transform:rotate(35deg)}
+  .bow-deco{position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:30px;z-index:2;filter:drop-shadow(0 2px 4px rgba(255,105,180,.4))}
+
+  .note{background:var(--paper);padding:24px 28px;border-radius:14px;box-shadow:0 10px 24px rgba(255,105,180,.15);font-size:17px;line-height:1.7;position:relative;border:1px solid rgba(255,183,197,.3)}
+  .note p{margin:0}
+  .note p + p{margin-top:12px}
+
+  .entry.left{display:flex;gap:30px;align-items:flex-start}
+  .entry.left .polaroid{transform:rotate(-5deg);flex-shrink:0}
+  .entry.left .note{flex:1;transform:rotate(1deg);margin-top:30px}
+  .entry.right{display:flex;gap:30px;align-items:flex-start;flex-direction:row-reverse}
+  .entry.right .polaroid{transform:rotate(4deg);flex-shrink:0}
+  .entry.right .note{flex:1;transform:rotate(-1.5deg);margin-top:30px}
+  .entry.center{text-align:center}
+  .entry.center .note{display:inline-block;max-width:520px;transform:rotate(-1deg);font-size:18px;text-align:left}
+
+  @media (max-width:640px){
+    .entry.left,.entry.right{flex-direction:column;align-items:center}
+    .entry.right{flex-direction:column}
+    .polaroid{width:240px}
+  }
+
+  /* highlight animations */
+  .hl-draw{
+    background:linear-gradient(120deg,#FFE5B4 0%,#FFE5B4 100%);
+    background-repeat:no-repeat;background-size:0% 60%;background-position:0 90%;
+    padding:0 4px;font-weight:600;transition:background-size .8s ease;
+  }
+  .entry.in .hl-draw{background-size:100% 60%;transition-delay:.4s}
+
+  .hl-pink{
+    background:linear-gradient(120deg,#FFC1D2 0%,#FFC1D2 100%);
+    background-repeat:no-repeat;background-size:0% 60%;background-position:0 90%;
+    padding:0 4px;font-weight:600;color:var(--ink);transition:background-size .9s ease;
+  }
+  .entry.in .hl-pink{background-size:100% 60%;transition-delay:.5s}
+
+  .pop{
+    display:inline-block;
+    background:linear-gradient(135deg,#FFE4EC,#FFD9E4);
+    padding:2px 10px;border-radius:12px;
+    font-weight:700;color:var(--pink-dark);
+    transform:scale(0) rotate(-5deg);
+    box-shadow:0 4px 10px rgba(255,105,180,.25);
+  }
+  .entry.in .pop{animation:popIn .6s cubic-bezier(.2,1.6,.4,1) .5s forwards}
+  @keyframes popIn{0%{transform:scale(0) rotate(-5deg)}60%{transform:scale(1.1) rotate(2deg)}100%{transform:scale(1) rotate(-1deg)}}
+
+  .shake{display:inline-block;transform-origin:center}
+  .entry.in .shake{animation:shakeEm .5s ease .8s 3}
+  @keyframes shakeEm{0%,100%{transform:rotate(0)}25%{transform:rotate(-20deg) scale(1.2)}75%{transform:rotate(20deg) scale(1.2)}}
+
+  .sparkle-text{position:relative;display:inline-block;color:var(--pink-dark);font-weight:700;font-style:italic}
+  .sparkle-text::before,.sparkle-text::after{content:"✨";position:absolute;font-size:14px;opacity:0}
+  .sparkle-text::before{top:-12px;left:-8px}
+  .sparkle-text::after{bottom:-10px;right:-10px}
+  .entry.in .sparkle-text::before{animation:sparkA 2s ease .8s infinite}
+  .entry.in .sparkle-text::after{animation:sparkA 2s ease 1.4s infinite}
+  @keyframes sparkA{0%,100%{opacity:0;transform:scale(.5) rotate(0)}50%{opacity:1;transform:scale(1.3) rotate(180deg)}}
+
+  .badge-konflik{
+    display:inline-block;background:linear-gradient(135deg,#FF69B4,#FF8FAB);
+    color:#fff;font-weight:700;padding:8px 18px;border-radius:30px;
+    font-size:15px;letter-spacing:.5px;
+    box-shadow:0 6px 16px rgba(255,105,180,.5);
+    transform:scale(0) rotate(-15deg);margin:6px 4px;border:3px solid #fff;
+  }
+  .entry.in .badge-konflik{animation:badgePop .7s cubic-bezier(.2,1.8,.4,1) .5s forwards, badgeWiggle .8s ease 1.3s 2}
+  @keyframes badgePop{0%{transform:scale(0) rotate(-15deg)}60%{transform:scale(1.2) rotate(8deg)}100%{transform:scale(1) rotate(-3deg)}}
+  @keyframes badgeWiggle{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.08) rotate(5deg)}}
+
+  .rage{
+    display:inline-block;background:linear-gradient(135deg,#FFD54F,#FFAB40);
+    padding:2px 10px;border-radius:8px;font-weight:700;color:#5d3a00;
+    box-shadow:0 4px 10px rgba(255,171,64,.4);
+  }
+  .entry.in .rage{animation:rageJig .35s ease 1s 4}
+  @keyframes rageJig{0%,100%{transform:rotate(-2deg) scale(1)}25%{transform:rotate(4deg) scale(1.1)}50%{transform:rotate(-4deg) scale(1.1)}75%{transform:rotate(3deg) scale(1.1)}}
+  .rage-emoji{display:inline-block}
+  .entry.in .rage-emoji{animation:rageEmoji .5s ease 1.2s 3}
+  @keyframes rageEmoji{0%,100%{transform:rotate(0)}50%{transform:rotate(360deg) scale(1.3)}}
+
+  .coquette{
+    background:linear-gradient(90deg,#FF69B4 0%,#FFB7C5 25%,#C77DFF 50%,#FF8FAB 75%,#FF69B4 100%);
+    background-size:200% auto;
+    -webkit-background-clip:text;background-clip:text;
+    -webkit-text-fill-color:transparent;color:transparent;
+    font-weight:700;animation:shimmer 4s linear infinite;display:inline;
+  }
+  @keyframes shimmer{to{background-position:200% center}}
+
+  .bow-mini{display:inline-block;animation:bowSpin 3s ease-in-out infinite}
+  @keyframes bowSpin{0%,100%{transform:rotate(-10deg) scale(1)}50%{transform:rotate(10deg) scale(1.15)}}
+
+  .ilham-wrap{display:inline-block;position:relative;padding:0 4px}
+  .ilham-name{color:#888;font-weight:600;position:relative;transition:color .5s ease}
+  .ilham-strike{position:absolute;left:0;right:0;top:50%;height:3px;background:#E53935;border-radius:3px;transform:scaleX(0);transform-origin:left center;box-shadow:0 0 8px rgba(229,57,53,.6)}
+  .ilham-fire{position:absolute;top:-8px;right:-22px;font-size:22px;opacity:0}
+  .entry.in .ilham-strike{animation:strikeIn .6s cubic-bezier(.5,0,.5,1) 1s forwards}
+  .entry.in .ilham-fire{animation:fireIn .4s ease 1.5s forwards, fireFlicker 1s ease-in-out 1.9s infinite}
+  @keyframes strikeIn{to{transform:scaleX(1)}}
+  @keyframes fireIn{to{opacity:1}}
+  @keyframes fireFlicker{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.2) rotate(5deg)}}
+
+  .lebih{display:inline-block;color:var(--pink-dark);font-weight:700;text-shadow:0 0 0 transparent;transform:scale(1)}
+  .entry.in .lebih{animation:lebihGlow 1s ease 2s forwards}
+  @keyframes lebihGlow{0%{text-shadow:0 0 0 transparent;transform:scale(1)}50%{text-shadow:0 0 20px rgba(255,105,180,.8);transform:scale(1.15)}100%{text-shadow:0 0 10px rgba(255,105,180,.4);transform:scale(1.05)}}
+
+  .zzz{display:inline-block;font-weight:700;color:#7B5BA0}
+  .zzz-emoji{display:inline-block}
+  .entry.in .zzz-emoji{animation:zzzFloat 2s ease 1s infinite}
+  @keyframes zzzFloat{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(15deg)}}
+
+  .nogalau{
+    display:inline-block;background:linear-gradient(135deg,#A8E6CF,#7FD8BE);
+    padding:2px 10px;border-radius:8px;font-weight:700;color:#1B5E20;
+    box-shadow:0 4px 10px rgba(127,216,190,.4);transform:scale(0);
+  }
+  .entry.in .nogalau{animation:popIn .6s cubic-bezier(.2,1.6,.4,1) 2.5s forwards}
+
+  .finale{text-align:center;margin-top:100px;padding:40px 20px}
+  .finale h3{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--pink-dark);font-size:clamp(36px,6vw,52px);line-height:1.1;margin-bottom:20px;transform:rotate(-2deg)}
+  .finale .emoji{font-size:42px;margin:20px 0;letter-spacing:8px}
+
+  /* slot machine */
+  .slot-machine{background:linear-gradient(180deg,#FF8FAB,#FF69B4);padding:24px;border-radius:22px;box-shadow:0 14px 30px rgba(255,105,180,.4), inset 0 0 0 4px #fff8e7;max-width:420px;margin:0 auto;transform:rotate(-1deg);position:relative}
+  .slot-machine::before{content:"🎀";position:absolute;top:-22px;left:50%;transform:translateX(-50%);font-size:36px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.2))}
+  .slot-label{color:#fff;font-family:'Dancing Script',cursive;font-size:22px;margin-bottom:10px}
+  .slot-frame{background:#fff;border-radius:10px;height:80px;overflow:hidden;position:relative;box-shadow:inset 0 4px 10px rgba(0,0,0,.15)}
+  .slot-frame::before,.slot-frame::after{content:"";position:absolute;left:0;right:0;height:20px;z-index:2;pointer-events:none}
+  .slot-frame::before{top:0;background:linear-gradient(180deg,rgba(255,255,255,.95),transparent)}
+  .slot-frame::after{bottom:0;background:linear-gradient(0deg,rgba(255,255,255,.95),transparent)}
+  .slot-reel{display:flex;flex-direction:column;transition:transform 3s cubic-bezier(.15,.85,.25,1)}
+  .slot-item{height:80px;display:flex;align-items:center;justify-content:center;font-size:17px;text-align:center;padding:0 12px;color:var(--ink);font-weight:600}
+  .spin-btn{margin-top:16px;background:#FFF8E7;color:var(--pink-dark);border:none;padding:12px 28px;border-radius:30px;font-family:'Quicksand',sans-serif;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 4px 0 #d9a3b0, 0 8px 16px rgba(0,0,0,.15);transition:transform .1s, box-shadow .1s}
+  .spin-btn:hover{transform:translateY(-1px)}
+  .spin-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #d9a3b0}
+  .spin-btn:disabled{opacity:.6;cursor:not-allowed}
+  .slot-caption{margin-top:14px;color:#fff;font-family:'Dancing Script',cursive;font-size:22px;min-height:28px}
+
+  .confetti{position:fixed;width:10px;height:14px;top:-20px;z-index:90;pointer-events:none;animation:confettiFall linear forwards}
+  @keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg)}}
+</style>
+</head>
+<body>
+
+<div id="leaves"></div>
+
+<section id="intro">
+  <div class="deco">🎀 𝒿𝓊𝓈𝓉 𝒻𝑜𝓇 𝓎𝑜𝓊 🎀</div>
+  <h1>Hai Kak Thisya 💕</h1>
+  <div class="sub">ada sesuatu buat kakak nih...</div>
+  <div class="box-wrap" id="box" onclick="openBox()">
+    <div class="bow">🎀</div>
+    <div class="box-lid"></div>
+    <div class="box-base"></div>
+    <div class="jaket">🧥</div>
+  </div>
+  <div class="tap-hint" id="hint">↑ klik pitanya ↑</div>
+  <div id="reveal-msg">
+    sebenernya kamu pasti udah tau duluan sih mau dibeliin hadiah apa gara-gara kemaren ngintip 😡<br><br>
+    <b>yap, jaket 🧥</b> — biar ga kepanasan pas commuting cantik depok–juanda
+  </div>
+  <button id="scroll-btn" onclick="enterBook()">buka surat dari aku →</button>
+</section>
+
+<main class="book">
+  <h2 class="title"><span class="small">~ a little something ~</span>untuk Kak Syesye 💖</h2>
+
+  <article class="entry left">
+    <div class="polaroid">
+      <div class="bow-deco">🎀</div>
+      <div class="photo" style="background-image:url('foto1.jpeg')">[ foto1.jpeg ]</div>
+      <div class="cap">~ syesye &lt;3 ~</div>
+    </div>
+    <div class="note">
+      <p>dear syesye,</p>
+      <p>sebenernya kamu pasti udah tau duluan sih mau dibeliin hadiah apa gara-gara kemaren <span class="pop">ngintip <span class="shake">😡</span></span></p>
+      <p>aku kasih kamu jaket ini supaya kamu ngga kepanasan kalo lagi <span class="hl-draw">commuting cantik dari depok – juanda</span>.</p>
+      <p>dan tentu aja jaket pura-pura coquette ini semoga bisa ngebuat kamu terhindar dari catcall di KRL atau jangan sampe ada kejadian dideketin orang china lagi di stasiun saking kamu terlalu <span class="sparkle-text">syesye-nya</span> 😑 <i>(emot mata cina)</i></p>
+    </div>
+  </article>
+
+  <article class="entry right">
+    <div class="polaroid">
+      <div class="tape tr"></div>
+      <div class="photo" style="background-image:url('foto2.jpeg')">[ foto2.jpeg ]</div>
+      <div class="cap">~ BUMC tercinta ~</div>
+    </div>
+    <div class="note">
+      <p>kaaaakkkk makasih banyak yaaa udah menerima aku di jakmall 🥹</p>
+      <p>aku baru kerja di sini 1 tahun tp rasanya tuh kayak udah lama bgt and it's all thanks to <b>you</b> yang udah berhasil ngebuat aku ngerasa <span class="hl-pink">engage bgt di BUMC tercinta ini</span>.</p>
+      <p>we've laughed together, argued countless times, but somehow we've always managed to work things out. karena apaa? tentu saja karena kita menerapkan ilmu dari training kita bahwa:</p>
+      <p style="text-align:center;margin-top:14px">
+        <span class="badge-konflik">⚔️ KONFLIK TANDA TIM KITA SEHAT 😎</span>
+      </p>
+    </div>
+  </article>
+
+  <article class="entry left">
+    <div class="polaroid">
+      <div class="tape tl"></div>
+      <div class="bow-deco">🎀</div>
+      <div class="photo" style="background-image:url('foto3.jpeg')">[ foto3.jpeg ]</div>
+      <div class="cap">~ thank u syesye ~</div>
+    </div>
+    <div class="note">
+      <p>thank you for being such a good syesye 🥺</p>
+      <p>aku minta maaf yaa kalo mungkin ada banyak bgt kesalahan yang udah aku lakuin selama di jakmall sampe sekarang.</p>
+      <p>aku admit kalo memang di beberapa momen aku bisa cukup <span class="hl-draw">stubborn seperti taurus pada umumnya</span> — maaf yaa, tp kamu tetep sabar menghadapi aku <i>(meskipun selalu kena <span class="rage">ragebait <span class="rage-emoji">🤪</span></span> sih)</i></p>
+    </div>
+  </article>
+
+  <article class="entry center">
+    <div class="note">
+      <p>semoga kamu jg bisa dapet <span class="hl-pink">company yang lebih baik</span> yaaa kak!!!</p>
+      <p>tentunya company yang... <span class="bow-mini">🎀</span></p>
+    </div>
+  </article>
+
+  <article class="entry center">
+    <div class="slot-machine">
+      <div class="slot-label">✨ fasilitas company impian ✨</div>
+      <div class="slot-frame">
+        <div class="slot-reel" id="reel">
+          <div class="slot-item">🏠 WFO cuma 2x/minggu</div>
+          <div class="slot-item">⏰ jam kerja fleksibel</div>
+          <div class="slot-item">🎫 cuti per-jam (akali sistem HAHA)</div>
+          <div class="slot-item">🏠 WFO cuma 2x/minggu</div>
+        </div>
+      </div>
+      <button class="spin-btn" id="spinBtn" onclick="spinSlot()">🎰 SPIN benefit impian</button>
+      <div class="slot-caption" id="slotCap">semoga semua-nya kamu dapet 💖</div>
+    </div>
+  </article>
+
+  <article class="entry center">
+    <div class="note">
+      <p>keep being a <span class="coquette">coquette depok girl yang tentunya tidak raja iblis</span> 👑</p>
+      <p>semoga kamu bisa selalu menemukan kebahagiaan di hidup kamu <i>(ofc karena <span class="zzz">deep sleep-nya selalu &gt;2 jam</span> <span class="zzz-emoji">💤</span>)</i></p>
+    </div>
+  </article>
+
+  <article class="entry center">
+    <div class="note" style="background:linear-gradient(135deg,#FFF8E7,#FFFDFB);border:2px dashed var(--pink)">
+      <p style="font-style:italic;color:#8a6b75;margin-bottom:14px">no but seriously...</p>
+      <p>semoga kamu bisa dapet <span class="hl-pink">pasangan yang lebih baik</span> juga yaaa kak!</p>
+      <p style="margin-top:14px">jangan pernah nangisin laki-laki kayak <span class="ilham-wrap"><span class="ilham-name">ilham</span><span class="ilham-strike"></span><span class="ilham-fire">🔥</span></span> lagi — karena dia <b>ga layak</b> buat ditangisin.</p>
+      <p style="margin-top:14px">semoga suatu saat kamu bakal dapetin laki-laki yang <span class="lebih">lebih lebih baik dari dia</span> ✨ yang ngebuat kamu <span class="nogalau">ga galau terus</span>.</p>
+    </div>
+  </article>
+
+  <div class="finale entry center">
+    <h3>bye syesyeeee 🎀<br>please ajak aku main muluuu<br>aku tetep mau kok 🥺</h3>
+    <div class="emoji">🎀 🧥 💖 ✨ 🧁</div>
+  </div>
+</main>
+
+<script>
+  const chars = ['🎀','💕','🌸','✨','🩰'];
+  const cont = document.getElementById('leaves');
+  for(let i=0;i<16;i++){
+    const l = document.createElement('div');
+    l.className='leaf';
+    l.textContent = chars[i%chars.length];
+    l.style.left = Math.random()*100+'vw';
+    l.style.animationDuration = (10+Math.random()*15)+'s';
+    l.style.animationDelay = (Math.random()*10)+'s';
+    l.style.fontSize = (14+Math.random()*18)+'px';
+    cont.appendChild(l);
+  }
+
+  function openBox(){
+    const box = document.getElementById('box');
+    if(box.classList.contains('open')) return;
+    box.classList.add('open');
+    document.getElementById('hint').style.display='none';
+  }
+  function enterBook(){
+    document.getElementById('intro').classList.add('gone');
+    document.body.style.overflow='auto';
+    setTimeout(()=>window.scrollTo({top:0,behavior:'smooth'}),100);
+  }
+  document.body.style.overflow='hidden';
+
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        if(e.target.classList.contains('finale')) fireConfetti();
+      }
+    });
+  },{threshold:.15});
+  document.querySelectorAll('.entry').forEach(el=>io.observe(el));
+
+  const slotOptions = [
+    {txt:'🏠 WFO cuma <b>2x/minggu</b>', cap:'no more macet senin sampe jumat 🙏'},
+    {txt:'⏰ jam kerja <b>super fleksibel</b>', cap:'masuk jam berapa aja boleeeh ⏰'},
+    {txt:'🎫 <b>cuti per-jam</b> (akali sistem HAHA)', cap:'galak ke HR yang ga ngasih ini 😤'},
+    {txt:'💰 gaji <b>naik 2x lipat</b> + benefit gila', cap:'aamiin paling kenceng 🤲💖'},
+    {txt:'🌴 <b>unlimited PTO</b> beneran kepake', cap:'liburan tiap bulan kayak influencer ✈️'},
+  ];
+  let spinning=false;
+  function spinSlot(){
+    if(spinning) return;
+    spinning=true;
+    const reel=document.getElementById('reel');
+    const btn=document.getElementById('spinBtn');
+    const cap=document.getElementById('slotCap');
+    btn.disabled=true;
+    cap.textContent='';
+    const result = Math.floor(Math.random()*slotOptions.length);
+    const items = [];
+    for(let i=0;i<20;i++){
+      items.push(slotOptions[Math.floor(Math.random()*slotOptions.length)]);
+    }
+    items.push(slotOptions[result]);
+    reel.style.transition='none';
+    reel.style.transform='translateY(0)';
+    reel.innerHTML = items.map(o=>`<div class="slot-item">${o.txt}</div>`).join('');
+    requestAnimationFrame(()=>{
+      reel.style.transition='transform 3s cubic-bezier(.15,.85,.25,1)';
+      reel.style.transform=`translateY(-${(items.length-1)*80}px)`;
+    });
+    setTimeout(()=>{
+      cap.textContent = slotOptions[result].cap;
+      btn.disabled=false;
+      spinning=false;
+    },3100);
+  }
+
+  let confettiDone=false;
+  function fireConfetti(){
+    if(confettiDone) return; confettiDone=true;
+    const colors=['#FF69B4','#FFB7C5','#FFD9E4','#FFF8E7','#C77DFF','#FF8FAB'];
+    for(let i=0;i<100;i++){
+      const c=document.createElement('div');
+      c.className='confetti';
+      c.style.left=Math.random()*100+'vw';
+      c.style.background=colors[i%colors.length];
+      c.style.animationDuration=(2+Math.random()*2.5)+'s';
+      c.style.animationDelay=(Math.random()*1.5)+'s';
+      c.style.transform=`rotate(${Math.random()*360}deg)`;
+      c.style.borderRadius=Math.random()>.5?'50%':'2px';
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),5000);
+    }
+  }
+</script>
+</body>
+</html>
